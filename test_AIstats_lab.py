@@ -1,7 +1,6 @@
 import numpy as np
 import AI_stats_lab as A
 
-
 def test_lasso_regression():
 
     train_mse, test_mse, train_r2, test_r2, theta = A.lasso_regression_diabetes()
