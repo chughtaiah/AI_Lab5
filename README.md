@@ -10,7 +10,7 @@ https://kuleshov-group.github.io/aml-book/contents/lecture5-regularization.html
 
 Dataset used: **Diabetes dataset** from scikit-learn.
 
----
+--------
 
 # Repository Structure
 
