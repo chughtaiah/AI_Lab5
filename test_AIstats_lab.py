@@ -1,5 +1,5 @@
 import numpy as np
-import AIstats_lab as A
+import AI_stats_lab as A
 
 
 def test_lasso_regression():
