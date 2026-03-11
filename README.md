@@ -1,58 +1,127 @@
-# AI Lab — Gradient Descent + Linear Regression
+# AI Stats Lab — Lasso Regularization & Overfitting
 
-This GitHub Classroom assignment has **4 questions**:
+This assignment explores two important machine learning concepts:
 
-## Q1 — Implement & visualize gradient descent
-Implement gradient descent for linear regression and produce the arrays needed to visualize:
-- Loss vs epoch
-- Parameter path `(theta0, theta1)` in parameter space
+1. **Lasso Regularization (L1 penalty)**
+2. **Overfitting due to increasing polynomial model complexity**
 
-Reference (inspiration): AML Book Lecture 3 (Linear Regression)  
-https://kuleshov-group.github.io/aml-book/contents/lecture3-linear-regression.html
+Reference lecture:
+https://kuleshov-group.github.io/aml-book/contents/lecture5-regularization.html
 
-**You will implement:**
-- `gradient_descent_linreg(...)`
-- `visualize_gradient_descent(...)`
+Dataset used: **Diabetes dataset** from scikit-learn.
 
 ---
 
-## Q2 — Diabetes linear regression using gradient descent
-Fit linear regression on the **sklearn diabetes dataset** using your GD implementation.
+# Repository Structure
 
-**You will implement:**
-- `diabetes_linear_gd(...)`
-
-Return: `(train_mse, test_mse, train_r2, test_r2, theta)`
-
----
-
-## Q3 — Diabetes linear regression using analytical solution
-Implement the closed-form solution (normal equation) with a tiny ridge term for numerical stability:
-
-\[
-\theta = (X^T X + \lambda I)^{-1} X^T y
-\]
-
-**You will implement:**
-- `diabetes_linear_analytical(...)`
-
-Return: `(train_mse, test_mse, train_r2, test_r2, theta)`
+```
+AIstats_lab.py
+test_AIstats_lab.py
+README.md
+```
 
 ---
 
-## Q4 — Compare GD vs Analytical solution
-Fit both methods and compare:
-- coefficient L2 difference
-- cosine similarity
-- differences in train/test metrics
+# Q1 — Lasso Regression (L1 Regularization)
 
-**You will implement:**
-- `diabetes_compare_gd_vs_analytical(...)`
+Lasso adds an **L1 penalty** to the loss:
 
-Return a dictionary with:
-- `theta_l2_diff`
-- `train_mse_diff`
-- `test_mse_diff`
-- `train_r2_diff`
-- `test_r2_diff`
-- `theta_cosine_sim`
+L(θ) = MSE + λ‖θ‖₁
+
+Where
+
+‖θ‖₁ = sum of absolute values of parameters.
+
+Since the L1 norm is not differentiable at zero, we use the **subgradient**:
+
+∂|θ| = sign(θ)
+
+### Task
+
+Implement Lasso regression using **gradient descent**.
+
+Function:
+
+```python
+lasso_regression_diabetes(lambda_reg=0.1, lr=0.01, epochs=2000)
+```
+
+Steps:
+
+1. Load diabetes dataset
+2. Train/test split
+3. Standardize features
+4. Add bias column
+5. Implement gradient descent with L1 penalty
+6. Evaluate metrics
+
+Return:
+
+```
+train_mse
+test_mse
+train_r2
+test_r2
+theta
+```
+
+---
+
+# Q2 — Overfitting with Polynomial Regression
+
+Higher-order polynomial models can **overfit training data**.
+
+Your task is to compare models with increasing polynomial degree.
+
+Steps:
+
+1. Load diabetes dataset
+2. Use **BMI feature only** (feature index = 2)
+3. Create polynomial features from **degree 1 → max_degree**
+4. Train regression using the **normal equation**
+5. Compute train and test MSE
+
+Function:
+
+```python
+polynomial_overfitting_experiment(max_degree=10)
+```
+
+Return dictionary:
+
+```
+{
+"degrees": list,
+"train_mse": list,
+"test_mse": list
+}
+```
+
+Expected behavior:
+
+* training error decreases with degree
+* test error eventually increases (overfitting)
+
+---
+
+# Running Tests
+
+Install dependencies:
+
+```bash
+pip install numpy scikit-learn pytest
+```
+
+Run autograder:
+
+```bash
+pytest -q
+```
+
+---
+
+# Rules
+
+• Do not rename functions
+• Do not change return formats
+• Use numpy operations where possible
